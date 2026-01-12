@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import tutorList from './components/TutorList';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +8,7 @@ const App = () => {
   const navigate = useNavigate();
  function App() {
   return ( Header component
+          <tutorList />
     <div>
       <Header />  {/* यह आपके हेडर को स्क्रीन पर दिखाएगा */}
       <h1>Welcome to District Tutor</h1>

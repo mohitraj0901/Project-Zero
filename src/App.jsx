@@ -1,10 +1,18 @@
+import Header from './components/Header';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
+ function App() {
+  return ( Header component
+    <div>
+      <Header />  {/* यह आपके हेडर को स्क्रीन पर दिखाएगा */}
+      <h1>Welcome to District Tutor</h1>
+    </div>
+  );
+}
   const colors = {
     primaryBlue: "#1DA1F2",
     darkText: "#14171A",

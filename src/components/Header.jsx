@@ -45,4 +45,58 @@ export default function Header({ onProfileClick }) {
     </header>
   );
 }
+import React from 'react';
+
+const Header = () => {
+  return (
+    <header style={styles.header}>
+      <div style={styles.logo}>
+        <h1>District Tutor</h1>
+      </div>
+      <nav>
+        <ul style={styles.navLinks}>
+          <li style={styles.link}>Home</li>
+          <li style={styles.link}>Find Tutors</li>
+          <li style={styles.link}>Become a Tutor</li>
+          <li style={{...styles.link, ...styles.loginBtn}}>Login</li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+const styles = {
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 5%',
+    backgroundColor: '#2c3e50',
+    color: 'white',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+  },
+  logo: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold'
+  },
+  navLinks: {
+    listStyle: 'none',
+    display: 'flex',
+    gap: '20px',
+    margin: 0,
+    alignItems: 'center'
+  },
+  link: {
+    cursor: 'pointer',
+    fontSize: '1rem'
+  },
+  loginBtn: {
+    backgroundColor: '#3498db',
+    padding: '8px 15px',
+    borderRadius: '5px',
+    fontWeight: 'bold'
+  }
+};
+
+export default Header;
 

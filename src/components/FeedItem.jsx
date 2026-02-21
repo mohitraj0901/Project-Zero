@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 
-export default function FeedItem({ item, onUpdate }) {
+export default function FeedItem({ item, onUpdate, onLike }) {
   const [commentText, setCommentText] = useState("");
 
-  function like() {
-    onUpdate({ ...item, likes: item.likes + 1 });
-  }
+  
 
   function dislike() {
     onUpdate({ ...item, dislikes: item.dislikes + 1 });
@@ -60,7 +58,7 @@ export default function FeedItem({ item, onUpdate }) {
           {/* Action Bar */}
           <div className="mt-6 flex items-center gap-2">
             <button 
-              onClick={like} 
+  onClick={() => onLike(item.id)} 
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-50 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 transition-all text-xs font-bold"
             >
               <span>👍</span> {item.likes}

@@ -1,9 +1,15 @@
 import Header from "./components/Header";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "./services/authService";
+import { registerUser } from "./services/authService";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const colors = {
@@ -11,16 +17,40 @@ const App = () => {
     darkText: "#14171A",
     mediumGray: "#657786",
   };
+  const handleSignup = async (e) => {
+  e.preventDefault();
 
-  const handleSignup = () => {
-    navigate("/home");
-  };
+  try {
+    const data = await registerUser({
+      name,
+      email,
+      password,
+    });
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
+    localStorage.setItem("token", data.token);
+
+    setIsSignupOpen(false);
+    navigate("/home/feed");
+  } catch (err) {
+    console.error("Signup failed", err);
+    alert("Signup failed");
+  }
+};
+  const handleLoginSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const data = await loginUser(email, password);
+
+    localStorage.setItem("token", data.token);
+
     setIsModalOpen(false);
-    navigate("/home");
-  };
+    navigate("/home/feed");
+  } catch (err) {
+    console.error(err);
+    alert("Login failed");
+  }
+};
 
   return (
     <div className="min-h-screen bg-white">
@@ -39,7 +69,7 @@ const App = () => {
 
         {/* Signup Button */}
         <button
-          onClick={handleSignup}
+         onClick={() => setIsSignupOpen(true)}
           className="px-6 py-3 text-white font-bold rounded-full hover:bg-blue-600 transition"
           style={{ backgroundColor: colors.primaryBlue }}
         >
@@ -69,18 +99,22 @@ const App = () => {
 
             <form onSubmit={handleLoginSubmit}>
               <input
-                type="text"
-                placeholder="Username"
-                required
-                className="w-full p-2 border mb-3 rounded"
-              />
+  type="text"
+  placeholder="Email"
+  required
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  className="w-full p-2 border mb-3 rounded"
+/>
 
               <input
-                type="password"
-                placeholder="Password"
-                required
-                className="w-full p-2 border mb-4 rounded"
-              />
+  type="password"
+  placeholder="Password"
+  required
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  className="w-full p-2 border mb-4 rounded"
+/>
 
               <button
                 type="submit"
@@ -100,6 +134,57 @@ const App = () => {
           </div>
         </div>
       )}
+      {isSignupOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+    <div className="bg-white p-6 rounded-lg w-80">
+      <h3 className="text-xl font-bold mb-4">Create Account</h3>
+
+      <form onSubmit={handleSignup}>
+        <input
+          type="text"
+          placeholder="Name"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full p-2 border mb-3 rounded"
+        />
+
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 border mb-3 rounded"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border mb-4 rounded"
+        />
+
+        <button
+          type="submit"
+          className="w-full py-2 text-white rounded"
+          style={{ backgroundColor: colors.primaryBlue }}
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <button
+        onClick={() => setIsSignupOpen(false)}
+        className="mt-4 text-sm text-gray-500"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };

@@ -5,22 +5,17 @@ export default function PostBox({ onAddPost }) {
   const [imageUrl, setImageUrl] = useState("");
 
   function submit(e) {
-    e.preventDefault();
-    if (!text.trim() && !imageUrl.trim()) return;
-    onAddPost({
-      id: Date.now(),
-      author: "You",
-      text: text.trim(),
-      imageUrl: imageUrl.trim() || null,
-      createdAt: new Date().toISOString(),
-      likes: 0,
-      dislikes: 0,
-      comments: [],
-    });
-    setText("");
-    setImageUrl("");
-  }
+  e.preventDefault();
 
+  if (!text.trim() && !imageUrl.trim()) return;
+
+  // 🔥 ONLY SEND TEXT
+  onAddPost({ text: text.trim() });
+
+  setText("");
+  setImageUrl("");
+}
+   
   return (
     <form 
       onSubmit={submit} 

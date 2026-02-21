@@ -1,38 +1,78 @@
 import React, { useState } from "react";
 import PostBox from "../components/PostBox";
 import FeedItem from "../components/FeedItem";
+import { useEffect } from "react";
+import { getPosts, createPost } from "../services/postService";
+import { toggleLike } from "../services/postService";
 
-const initialPosts = [
-  {
-    id: 111,
-    author: "Alice",
-    handle: "@alice_wonder",
-    text: "Hello from Alice — enjoying the new app! The interface feels so smooth and modern. ✨",
-    imageUrl: null,
-    createdAt: new Date().toISOString(),
-    likes: 2,
-    dislikes: 0,
-    comments: [{ id: 1, author: "Bob", text: "Nice!", createdAt: new Date().toISOString() }],
-  },
-  {
-    id: 222,
-    author: "CityNews",
-    handle: "@city_updates",
-    text: "Quick photo from the downtown parade earlier today. The turnout was amazing!",
-    imageUrl: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=600",
-    createdAt: new Date().toISOString(),
-    likes: 5,
-    dislikes: 0,
-    comments: [],
-  },
-];
+
 
 export default function SocialFeed() {
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState([]);
+ const handleLike = async (postId) => {
+  try {
+    const data = await toggleLike(postId);
 
-  function addPost(post) {
-    setPosts((p) => [post, ...p]);
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, likes: data.likesCount }
+          : post
+      )
+    );
+  } catch (err) {
+    console.error("Like failed", err);
   }
+};
+  useEffect(() => {
+    
+  const fetchPosts = async () => {
+    try {
+      const data = await getPosts();
+
+      // Transform backend format → your UI format
+      const formatted = data.map((post) => ({
+        id: post._id,
+        author: post.user?.name || "Unknown",
+        handle: "@user",
+        text: post.content,
+        imageUrl: null,
+        createdAt: post.createdAt,
+        likes: post.likes?.length || 0,
+        dislikes: 0,
+        comments: [],
+      }));
+
+      setPosts(formatted);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchPosts();
+}, []);
+
+  async function addPost(post) {
+  try {
+    const newPost = await createPost(post.text);
+
+    const formatted = {
+      id: newPost._id,
+      author: newPost.user?.name || "You",
+      handle: "@you",
+      text: newPost.content,
+      imageUrl: null,
+      createdAt: newPost.createdAt,
+      likes: 0,
+      dislikes: 0,
+      comments: [],
+    };
+
+    setPosts((p) => [formatted, ...p]);
+  } catch (err) {
+    console.error(err);
+  }
+}
 
   function updatePost(updated) {
     setPosts((p) => p.map((x) => (x.id === updated.id ? updated : x)));
@@ -56,7 +96,11 @@ export default function SocialFeed() {
               key={p.id} 
               className="bg-white rounded-[32px] border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)] transition-all duration-500 overflow-hidden"
             >
-              <FeedItem item={p} onUpdate={updatePost} />
+              <FeedItem 
+  item={p} 
+  onUpdate={updatePost}
+  onLike={handleLike}
+/>
             </div>
           ))}
         </div>

@@ -78,27 +78,6 @@ https://project-zero-1a6h.onrender.com
 
 ---
 
-## 📂 Project Structure
-
-project-zero/
-│
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   └── App.jsx
-│
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   ├── middleware/
-│   └── server.js
-│
-└── README.md
-
----
-
 ## 🔐 Major API Endpoints
 
 ### Auth Routes

@@ -1,57 +1,125 @@
-# 🚀 Zero — Social News + Social Feed App
+# 🚀 Zero — Social News & Social Feed Platform
 
-Zero is a modern full-stack social platform combining:
+Zero is a modern full-stack social platform that combines:
 
-- 📰 A News Section with District, State, and National updates
+- 📰 A News Section (District, State, National updates)
 - 💬 A Social Feed where users can post and interact
+- 🔐 Secure authentication system
+- ❤️ Real-time Like / Unlike functionality
 
----
-
-## 🔐 Backend Authentication System
-
-Recently added full authentication system with:
-
-- User Registration API
-- Login API
-- Password Hashing using bcrypt
-- JWT Token-based Authentication
-- MongoDB Atlas Cloud Database Integration
-- RESTful API architecture
-
----
-
-## 🛠 Tech Stack
-
-### Frontend
-- React (Vite)
-- Tailwind CSS
-
-### Backend
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Mongoose
-- JWT Authentication
-
----
-
+Built using the MERN Stack and deployed on Vercel + Render.
 
 ---
 
 ## 🌐 Live Demo
 
-Frontend deployed on Vercel:
-👉 https://project-zero-beryl.vercel.app
+🔗 **Frontend (Vercel):**  
+https://project-zero-beryl.vercel.app  
+
+🔗 **Backend API (Render):**  
+https://project-zero-1a6h.onrender.com  
 
 ---
 
-## 🚧 Upcoming Features
+## ✨ Features
 
-- Protected Routes
-- User Profile API
-- Post Creation API
-- Like / Comment System
-- Frontend-Backend Integration
+### 🔐 Authentication System
+- User Registration API
+- Login API
+- Password hashing using bcrypt
+- JWT Token-based authentication
+- Protected routes
+- Secure environment variables
+- MongoDB Atlas cloud database integration
+
+### 📰 News Section
+- District-level news
+- State-level news
+- National news
+- Clean two-column layout
+- Responsive UI
+
+### 💬 Social Feed
+- Create posts
+- View global feed
+- Like / Unlike posts
+- Dynamic UI updates
+- Persistent data storage
+
+### 🛡 Backend Architecture
+- RESTful API design
+- Modular folder structure
+- Controller-Service pattern
+- JWT authentication middleware
+- Mongoose schema modeling
+
+---
+
+## 🛠 Tech Stack
+
+### 🎨 Frontend
+- React (Vite)
+- Tailwind CSS
+- Axios
+- React Router DOM
+
+### ⚙ Backend
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- JWT
+- bcrypt
+
+### ☁ Deployment
+- Frontend → Vercel
+- Backend → Render
+- Database → MongoDB Atlas
+
+---
+
+## 📂 Project Structure
+
+project-zero/
+│
+├── frontend/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── App.jsx
+│
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── models/
+│   ├── middleware/
+│   └── server.js
+│
+└── README.md
+
+---
+
+## 🔐 Major API Endpoints
+
+### Auth Routes
+- POST `/api/auth/register`
+- POST `/api/auth/login`
+
+### Post Routes
+- GET `/api/posts`
+- POST `/api/posts`
+- PUT `/api/posts/:id/like`
+
+---
+
+## 🚀 Upcoming Improvements
+
+- Comment system
+- User profile page
+- Follow / Unfollow feature
+- Bookmark posts
+- Admin panel
+- News CMS integration
 
 ---
 
